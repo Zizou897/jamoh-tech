@@ -1,0 +1,126 @@
+{% extends 'app/layout/base.html' %}
+{% load static %}
+{% block content %}
+<div class="hero" style="background:  rgba(0, 0, 0, 0.7) url('{{ banner.picture.url }}') no-repeat center;">
+    <div class="container">
+        {{ banner.libele|safe }}
+    </div>
+</div>
+
+
+
+<section id="services" class="services pt-5">
+    <div class="container">
+      <div class="row pb-lg-5">
+      
+      </div>
+      <div class="row">
+        <h2 class="fw-bold "> De quel service avez-vous besoin ?</h2>
+        <p class=""> Pour chaque situation, trouvez le prestataire dont les compétences répondent <br> à vos attentes et à votre niveau d’exigence.</p>
+        {% for service in services %} 
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" >
+            <a href="detail-service.html">
+            <div class="icon-box box" style="background-image: url({{service.picture.url}}); background-size: cover; background-repeat:no-repeat">
+              <h4>Ménage</h4>
+            </div>
+          </a>
+          </div>
+          {% endfor %} 
+      </div>
+    </div>
+  </section><!-- End Services Section -->
+
+
+
+<section class="layout_padding p-5">
+    <div class="container ">
+        <div class="heading_center text-center row">
+            <h2 class="text-center">De quel service avez-vous besoin ?</h2>
+            <p>
+                Pour chaque situation, trouvez le prestataire dont les compétences répondent
+                à vos attentes et à votre niveau d’exigence.
+            </p>    
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-between">
+            {% for service in services %} 
+            <div class="card col-md-4" style="width: 20 rem;">
+                <a href="">
+                    <img class="card-img-top" src="{{service.picture.url}}" alt="Card image cap" style="width: 20rem; border-radius:5px">
+                    <div class="card-body">
+                    <p class="card-text">{{service.name}}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="layout_padding p-5">
+    <div class="container ">
+        <div class="heading_center text-center row">
+            <h2 class="text-center">De quel service avez-vous besoin ?</h2> 
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="row d-flex justify-content-between">
+
+            <div class="card col-md-3" style="width: 20rem;">
+                <img class="card-img-top" src="{% static 'app/2.jpg' %}" alt="Card image cap" style="width: 20rem; border-radius:5px">
+                <div class="card-body">
+                  <p class="card-text">New service</p>              
+                  <p class="card-text">New service</p>
+                </div>
+            </div>
+
+            <div class="card col-md-3" style="width: 20 rem;">
+                <img class="card-img-top" src="{% static 'app/2.jpg' %}" alt="Card image cap" style="width: 20rem; border-radius:5px">
+                <div class="card-body">
+                  <p class="card-text">New service</p>                
+                  <p class="card-text">New service</p>
+                </div>
+            </div>
+
+            <div class="card col-md-3" style="width: 20rem;">
+                <img class="card-img-top" src="{% static 'app/2.jpg' %}" alt="Card image cap" style="width: 20rem; border-radius:5px">
+                <div class="card-body">
+                  <p class="card-text">New service</p>                
+                  <p class="card-text">New service</p>
+                </div>
+            </div>
+
+            <div class="card col-md-3" style="width: 20rem;">
+                <img class="card-img-top" src="{% static 'app/2.jpg' %}" alt="Card image cap" style="width: 20rem; border-radius:5px">
+                <div class="card-body">
+                  <p class="card-text">New service</p>                
+                  <p class="card-text">New service</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="services py-5 bg-light">
+    <div class="container py-5">
+        <h1 class="text-center pb-5">Services</h1>
+        <div class="row pb-3">
+            <div class="col-md-4 mb-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="circle">
+                            <span><i class="fas fa-desktop"></i></span>
+                        </div>
+                        <h4 class="fs-bold pb-2">prestation</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus magnam quis, ducimus tempore possimus culpa dolorem unde minima consectetur doloremque eos rem, ipsam, in vel laborum fugit veniam. Totam, mollitia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
