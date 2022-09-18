@@ -1,72 +1,120 @@
 from django.db import models
-from tinymce.models import HTMLField
+from django.utils.text import slugify
 
-"""
-    google font: Open Sens, lato, nunito
-"""
+# Create your models here.
 class Convention(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
+    status = models.BooleanField(default=True)
+    date_add = models.DateField(auto_now=False, auto_now_add=True)
+    date_update = models.DateField(auto_now=True, auto_now_add=False)
+
     class Meta:
         abstract = True
-
-class Banner(Convention):
-    picture = models.FileField(max_length=100, upload_to="img_banner")
-    libele = HTMLField()
+        
     
+class Banner(Convention):
+    title = models.CharField(max_length=50)
+    picture = models.FileField(upload_to='img_banner')
+    
+    class Meta:
+        verbose_name = "Banner"
+        verbose_name_plural = "Banners"
+
+    def __str__(self):
+        return self.title
+    
+
+class Text(Convention):
+    libele = models.CharField(max_length=50)
+    description =models.CharField(max_length=50)
+    
+    class Meta:
+        verbose_name = "Text"
+        verbose_name_plural = "Texts"
 
     def __str__(self):
         return self.libele
+        
 
-class ReseauSocial(Convention):
-    name= models.CharField(max_length=50)
-    icon = models.CharField(max_length=50)
-    link = models.URLField(null=True)
+class Quality(Convention):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    picture = models.FileField(upload_to='img_quality')
+
+    class Meta:
+        verbose_name = "Quality"
+        verbose_name_plural = "Qualities"
+    
+    def __str__(self):
+        return self.title
+
+class AskService(Convention):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    order = models.IntegerField()
+    picture = models.FileField(upload_to='img_ask_service')
+
+    class Meta:
+        verbose_name = "Procedure"
+        verbose_name_plural = "Procedures"
+    
+    def __str__(self):
+        return self.title
     
 
-    def __str(self):
-        return self.name
-
-class Site(Convention):
-    name = models.CharField(max_length=30)
-    picture = models.FileField(upload_to="img_site")
-    email = models.EmailField(max_length=100)
-    phone = models.PositiveIntegerField()
-    copyright = models.CharField(max_length=50)
     
+class About(Convention):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    picture = models.FileField(upload_to='img_about')
+
+    class Meta:
+        verbose_name = "About"
+        verbose_name_plural = "Abouts"
 
     def __str__(self):
-        return self.name
-
+        return self.title
 
 class Service(Convention):
     name = models.CharField(max_length=50)
     picture = models.FileField(upload_to="img_service")
-    libele = HTMLField()
     description = models.TextField()
     order = models.IntegerField()
+    service_slug = models.SlugField()
     
+    
+    class Meta:
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
 
     def __str__(self):
         return self.name
-
-
-class About(Convention):
-    description = models.TextField()
     
+    def save(self, *args, **kwargs):
+        if not self.service_slug:
+            self.service_slug = slugify('{}'.format(self.name))
+        super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.description
 
-class UnderService(Convention):
+
+
+class SousService(Convention):
     name = models.CharField(max_length=50)
-    picture = models.FileField(upload_to="img_under_site")
-    libele = HTMLField()
+    picture = models.FileField(upload_to="img_service")
+    libele = models.TextField()
     description = models.TextField()
-    order =models.IntegerField()
-    price = models.CharField(max_length=6)
+    order = models.IntegerField()
+    price = models.CharField(max_length=10)
+    sous_service_slug = models.SlugField()
+    service = models.ForeignKey("Service", related_name="category_service", on_delete=models.CASCADE)
     
+    class Meta:
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
 
-    def __srt__(self):
-        return self.name
+    def __str__(self):
+        return 
+
+    def save(self, *args, **kwargs):
+        if not self.service_slug:
+            self.service_slug = slugify('{}'.format(self.name))
+        super().save(*args, **kwargs)
